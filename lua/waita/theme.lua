@@ -24,7 +24,7 @@ function M.get_highlights(p)
   local def = {
     bg = p.background1,       -- Background
     fg = p.light2,            -- Foreground
-    bg_float = p.background2, -- Background in floating windows
+    bg_float = p.background1, -- Background in floating windows
     border = p.background2,   -- Border color
     border_fg = p.ligh5,      -- Border chars
     comment = p.dark2,        -- Comments (in code)
