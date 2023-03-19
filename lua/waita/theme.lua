@@ -244,6 +244,12 @@ function M.get_highlights(p)
 		NvimTreeOpenedFile = { bg = util.lighten(def.bg, 0.3) },
 		NvimTreeSpecialFile = { fg = p.green2 },
 		NvimTreeSymlink = { fg = p.yellow3 },
+
+    -- Custom highlights I make on my config
+    DiagnosticSignErrorLine = { bg = util.blend(def.error, def.bg, 0.1) },
+    DiagnosticSignWarnLine = { bg = util.blend(def.warning, def.bg, 0.1) },
+    DiagnosticSignHintLine = { bg = util.blend(def.hint, def.bg, 0.1) },
+    DiagnosticSignInfoLine = { bg = util.blend(def.info, def.bg, 0.1) },
 	}
 end
 
