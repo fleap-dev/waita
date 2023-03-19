@@ -1,6 +1,17 @@
 local util = require("waita.util")
 local colors = require("waita.colors")
 
+local bold_val = false
+local italic_val = true
+
+if vim.g["waita_bold"] == true then
+  bold_val = true
+end
+
+if vim.g["waita_italic"] == false then
+  italic_val = false
+end
+
 local M = {}
 
 function M.setup()
@@ -35,7 +46,7 @@ function M.get_highlights(p)
 		gutter = p.light5, -- Gutter text color
 	}
 	return {
-		Comment = { fg = def.comment, italic = true }, -- any comment
+		Comment = { fg = def.comment, italic = italic_val }, -- any comment
 		ColorColumn = { bg = p.dark1 }, -- used for the columns set with 'colorcolumn'
 		Conceal = { fg = p.dark5 }, -- placeholder characters substituted for concealed text (see 'conceallevel')
 		Cursor = { fg = def.bg, bg = def.fg }, -- character under the cursor
@@ -53,7 +64,7 @@ function M.get_highlights(p)
 		-- TermCursorNC= { }, -- cursor in an unfocused terminal
 		ErrorMsg = { fg = def.error }, -- error messages on the command line
 		VertSplit = { fg = def.border }, -- the column separating vertically split windows
-		WinSeparator = { fg = def.border, bold = true }, -- the column separating vertically split windows
+		WinSeparator = { fg = def.border, bold = bold_val }, -- the column separating vertically split windows
 		Folded = { fg = p.blue1 }, -- line used for closed folds
 		FoldColumn = { bg = def.bg, fg = def.comment }, -- 'foldcolumn'
 		SignColumn = { bg = def.bg, fg = def.border }, -- column where |signs| are displayed
@@ -61,8 +72,8 @@ function M.get_highlights(p)
 		Substitute = { bg = p.green1, fg = p.dark5 }, -- |:substitute| replacement text highlighting
 		LineNr = { fg = def.gutter }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
 		CursorLineNr = { fg = def.fg }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
-		MatchParen = { bold = true }, -- The character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
-		ModeMsg = { fg = def.bg, bold = true }, -- 'showmode' message (e.g., "-- INSERT -- ")
+		MatchParen = { bold = bold_val }, -- The character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
+		ModeMsg = { fg = def.bg, bold = bold_val }, -- 'showmode' message (e.g., "-- INSERT -- ")
 		MsgArea = { fg = p.text_light1 }, -- Area for messages and cmdline
 		-- MsgSeparator= { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
 		MoreMsg = { fg = p.green5 }, -- |more-prompt|
@@ -73,11 +84,11 @@ function M.get_highlights(p)
 		NormalFloat = { fg = def.fg, bg = def.bg_float }, -- Normal text in floating windows.
 		FloatBorder = { fg = def.border_fg, bg = def.bg_float },
 		Pmenu = { bg = p.background2, fg = p.fg }, -- Popup menu: normal item.
-		PmenuSel = { bg = util.lighten(p.background2, 0.8), bold = true }, -- Popup menu: selected item.
+		PmenuSel = { bg = util.lighten(p.background2, 0.8), bold = bold_val }, -- Popup menu: selected item.
 		PmenuSbar = { bg = util.lighten(p.background2, 0.90) }, -- Popup menu: scrollbar.
 		PmenuThumb = { bg = def.gutter }, -- Popup menu: Thumb of the scrollbar.
 		Question = { fg = p.blue3 }, -- |hit-enter| prompt and yes/no questions
-		QuickFixLine = { bg = p.blue3, bold = true }, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
+		QuickFixLine = { bg = p.blue3, bold = bold_val }, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
 		Search = { bg = p.green4, fg = def.fg }, -- Last search pattern highlighting (see 'hlsearch').  Also used for similar items that need to stand out.
 		IncSearch = { bg = p.green4, fg = def.fg }, -- 'incsearch' highlighting, also used for the text replaced with ":s///c"
 		SpecialKey = { fg = p.red3 }, -- Unprintable characters: text displayed differently from what it really is.  But not 'listchars' whitespace. |hl-Whitespace|
@@ -90,7 +101,7 @@ function M.get_highlights(p)
 		-- TabLine = { bg = c.bg_statusline, fg = c.fg_gutter }, -- tab pages line, not active tab page label
 		-- TabLineFill = { bg = c.black }, -- tab pages line, where there are no labels
 		-- TabLineSel = { fg = c.black, bg = c.blue }, -- tab pages line, active tab page label
-		-- Title = { fg = c.blue, bold = true }, -- titles for output from ":set all", ":autocmd" etc.
+		-- Title = { fg = c.blue, bold = bold_val }, -- titles for output from ":set all", ":autocmd" etc.
 		Visual = { bg = p.text_selection }, -- Visual mode selection
 		VisualNOS = { bg = p.text_selection }, -- Visual mode selection when vim is "Not Owning the Selection".
 		WarningMsg = { fg = def.warning }, -- warning messages
@@ -118,16 +129,16 @@ function M.get_highlights(p)
 		-- Repeat        = { }, --   for, do, while, etc.
 		-- Label         = { }, --    case, default, etc.
 		Operator = { fg = p.red1 }, -- "sizeof", "+", "*", etc.
-		Keyword = { fg = p.red1, bold = true }, --  any other keyword
+		Keyword = { fg = p.red1, bold = bold_val }, --  any other keyword
 		-- Exception     = { }, --  try, catch, throw
 
 		PreProc = { fg = p.blue2 }, -- (preferred) generic Preprocessor
 		-- Include       = { }, --  preprocessor #include
 		-- Define        = { }, --   preprocessor #define
-		Macro = { fg = p.blue2, bold = true }, --    same as Define
+		Macro = { fg = p.blue2, bold = bold_val }, --    same as Define
 		-- PreCondit     = { }, --  preprocessor #if, #else, #endif, etc.
 
-		Type = { fg = p.green3, bold = true }, -- (preferred) int, long, char, etc.
+		Type = { fg = p.green3, bold = bold_val }, -- (preferred) int, long, char, etc.
 		-- StorageClass  = { }, -- static, register, volatile, etc.
 		-- Structure     = { }, --  struct, union, enum, etc.
 		-- Typedef       = { }, --  A typedef
@@ -141,8 +152,8 @@ function M.get_highlights(p)
 		-- Debug         = { }, --    debugging statements
 
 		Underlined = { underline = true }, -- (preferred) text that stands out, HTML links
-		Bold = { bold = true },
-		Italic = { italic = true },
+		Bold = { bold = bold_val },
+		Italic = { italic = italic_val },
 
 		Error = { fg = def.error }, -- (preferred) any erroneous construct
 		Todo = { bg = p.yellow3, fg = def.bg }, -- (preferred) anything that needs extra attention, mostly the keywords TODO FIXME and XXX
@@ -151,10 +162,10 @@ function M.get_highlights(p)
 		DiagnosticInfo = { fg = def.info }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
 		DiagnosticHint = { fg = def.hint }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default
 		--
-		DiagnosticVirtualTextError = { fg = def.error, italic = true }, -- Used for "Error" diagnostic virtual text
-		DiagnosticVirtualTextWarn = { fg = def.warning, italic = true }, -- Used for "Warning" diagnostic virtual text
-		DiagnosticVirtualTextInfo = { fg = def.info, italic = true }, -- Used for "Information" diagnostic virtual text
-		DiagnosticVirtualTextHint = { fg = def.hint, italic = true }, -- Used for "Hint" diagnostic virtual text
+		DiagnosticVirtualTextError = { fg = def.error, italic = italic_val }, -- Used for "Error" diagnostic virtual text
+		DiagnosticVirtualTextWarn = { fg = def.warning, italic = italic_val }, -- Used for "Warning" diagnostic virtual text
+		DiagnosticVirtualTextInfo = { fg = def.info, italic = italic_val }, -- Used for "Information" diagnostic virtual text
+		DiagnosticVirtualTextHint = { fg = def.hint, italic = italic_val }, -- Used for "Hint" diagnostic virtual text
 		--
 		DiagnosticUnderlineError = { undercurl = true, sp = def.error }, -- Used to underline "Error" diagnostics
 		DiagnosticUnderlineWarn = { undercurl = true, sp = def.warning }, -- Used to underline "Warning" diagnostics
@@ -166,18 +177,18 @@ function M.get_highlights(p)
     --
     -- TreeSitter highlights
     --
-		["@type.qualifier"] = { fg = p.red1, bold = true },
-		["@include"] = { fg = p.red1, bold = true },
-		["@parameter"] = { fg = p.orange3, italic = true },
-		["@label"] = { fg = p.orange2, italic = true },
+		["@type.qualifier"] = { fg = p.red1, bold = bold_val },
+		["@include"] = { fg = p.red1, bold = bold_val },
+		["@parameter"] = { fg = p.orange3, italic = italic_val },
+		["@label"] = { fg = p.orange2, italic = italic_val },
 		["@variable"] = { fg = p.text_light2 },
-		["@keyword"] = { fg = p.red1, bold = true },
-		["@repeat"] = { fg = p.red1, bold = true },
-		["@boolean"] = { fg = p.red1, bold = true },
+		["@keyword"] = { fg = p.red1, bold = bold_val },
+		["@repeat"] = { fg = p.red1, bold = bold_val },
+		["@boolean"] = { fg = p.red1, bold = bold_val },
 		["@variable.builtin"] = { fg = p.red1 },
-    ["@constant"] = { fg = p.orange1, bold = false }, -- For constants
-    ["@text.title"] = { fg = p.text_light2, bold = true }, -- For constants
-    ["@storageclass.lifetime"] = { fg = p.green4, italic = true }, -- For constants
+    ["@constant"] = { fg = p.orange1, bold = bold_val }, -- For constants
+    ["@text.title"] = { fg = p.text_light2, bold = bold_val }, -- For constants
+    ["@storageclass.lifetime"] = { fg = p.green4, italic = italic_val }, -- For constants
 		TSAnnotation = { fg = p.blue2 }, -- For C++/Dart attributes, annotations that can be attached to the code to denote some kind of meta information.
 		TSAttribute = { fg = p.blue2 }, -- (unstable) TODO: docs
 		TSBoolean = { fg = p.red1 }, -- For booleans.
@@ -196,16 +207,16 @@ function M.get_highlights(p)
 		-- TSFloat             = { },    -- For floats.
 		TSFunction = { fg = p.green1 }, -- For function (calls and definitions).
 		TSFuncBuiltin = { fg = p.green1 }, -- For builtin functions: `table.insert` in Lua.
-		TSFuncMacro = { fg = p.blue2, bold = true }, -- For macro defined fuctions (calls and definitions): each `macro_rules` in Rust.
-		TSInclude = { fg = p.red1, bold = true }, -- For includes: `#include` in C, `use` or `extern crate` in Rust, or `require` in Lua.
-		TSKeyword = { fg = p.red1, bold = true }, -- For keywords that don't fall in previous categories.
-		TSKeywordFunction = { fg = p.red1, bold = true }, -- For keywords used to define a fuction.
+		TSFuncMacro = { fg = p.blue2, bold = bold_val }, -- For macro defined fuctions (calls and definitions): each `macro_rules` in Rust.
+		TSInclude = { fg = p.red1, bold = bold_val }, -- For includes: `#include` in C, `use` or `extern crate` in Rust, or `require` in Lua.
+		TSKeyword = { fg = p.red1, bold = bold_val }, -- For keywords that don't fall in previous categories.
+		TSKeywordFunction = { fg = p.red1, bold = bold_val }, -- For keywords used to define a fuction.
 		TSLabel = { fg = p.blue3 }, -- For labels: `label:` in C and `:label:` in Lua.
 		TSMethod = { fg = p.green1 }, -- For method calls and definitions.
 		TSNamespace = { fg = p.text_light2 }, -- For identifiers referring to modules and namespaces.
 		-- TSNone              = { fg = p.red1 },    -- TODO: docs
 		TSNumber = { fg = p.purple1 }, -- For all numbers
-		TSOperator = { fg = p.red1, bold = true }, -- For any operator: `+`, but also `->` and `*` in C.
+		TSOperator = { fg = p.red1, bold = bold_val }, -- For any operator: `+`, but also `->` and `*` in C.
 		TSParameter = { fg = p.orange1 }, -- For parameters of a function.
 		TSParameterReference = { fg = p.orange1 }, -- For references to parameters of a function.
 		TSProperty = { fg = p.blue1 }, -- Same as `TSField`.
@@ -216,19 +227,19 @@ function M.get_highlights(p)
 		TSString = { fg = p.yellow2 }, -- For strings.
 		TSStringRegex = { fg = p.orange2 }, -- For regexes.
 		TSStringEscape = { fg = p.purple1 }, -- For escape characters within a string.
-		TSSymbol = { fg = p.green3, bold = true }, -- For identifiers referring to symbols or atoms.
-		TSType = { fg = p.green3, bold = true }, -- For types.
-		TSTypeBuiltin = { fg = p.green3, bold = true }, -- For builtin types.
+		TSSymbol = { fg = p.green3, bold = bold_val }, -- For identifiers referring to symbols or atoms.
+		TSType = { fg = p.green3, bold = bold_val }, -- For types.
+		TSTypeBuiltin = { fg = p.green3, bold = bold_val }, -- For builtin types.
 		TSVariable = { fg = p.text_light2 }, -- Any variable name that does not have another highlight.
 		TSVariableBuiltin = { fg = p.red1 }, -- Variable names that are defined by the languages, like `this` or `self`.
 		-- TSTag               = { },    -- Tags like html tag names.
 		-- TSTagDelimiter      = { },    -- Tag delimiter like `<` `>` `/`
 		TSText = { fg = p.text_light2 }, -- For strings considered text in a markup language.
 		TSTextReference = { fg = p.text_light3 },
-		TSEmphasis = { bold = true }, -- For text to be represented with emphasis.
+		TSEmphasis = { bold = bold_val }, -- For text to be represented with emphasis.
 		TSUnderline = { underline = true }, -- For text to be represented with an underline.
 		TSStrike = { strikethrough = true }, -- For strikethrough text.
-		TSTitle = { bold = true }, -- Text that is part of a title.
+		TSTitle = { bold = bold_val }, -- Text that is part of a title.
 		-- TSLiteral           = { },    -- Literal text.
 		TSURI = { fg = p.blue1 }, -- Any URI like a link or email.
 		-- Telescope
@@ -237,9 +248,9 @@ function M.get_highlights(p)
 		-- NvimTree
 		NvimTreeNormal = { fg = def.fg, bg = def.bg },
 		NvimTreeFolderName = { fg = p.blue1 },
-		NvimTreeRootFolder = { fg = p.blue2, bold = true },
-		NvimTreeGitDirty = { italic = true },
-		NvimTreeGitNew = { italic = true },
+		NvimTreeRootFolder = { fg = p.blue2, bold = bold_val },
+		NvimTreeGitDirty = { italic = italic_val },
+		NvimTreeGitNew = { italic = italic_val },
 		NvimTreeGitDeleted = { strikethrough = true },
 		NvimTreeOpenedFile = { bg = util.lighten(def.bg, 0.3) },
 		NvimTreeSpecialFile = { fg = p.green2 },
