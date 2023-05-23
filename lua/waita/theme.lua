@@ -189,6 +189,8 @@ function M.get_highlights(p)
     ["@constant"] = { fg = p.orange1, bold = bold_val }, -- For constants
     ["@text.title"] = { fg = p.text_light2, bold = bold_val }, -- For constants
     ["@storageclass.lifetime"] = { fg = p.green4, italic = italic_val }, -- For constants
+    ["@namespace"] = { fg = p.blue1 },
+    ["@text.environment"] = { fg = p.blue1 },
 		TSAnnotation = { fg = p.blue2 }, -- For C++/Dart attributes, annotations that can be attached to the code to denote some kind of meta information.
 		TSAttribute = { fg = p.blue2 }, -- (unstable) TODO: docs
 		TSBoolean = { fg = p.red1 }, -- For booleans.
